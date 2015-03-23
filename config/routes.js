@@ -34,6 +34,10 @@ module.exports.routes = {
 
   '/': {
     view: 'homepage'
+  },
+  'get /:id' : {
+    controller: 'AccountController',
+    action : 'balance'
   }
 
   /***************************************************************************

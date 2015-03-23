@@ -6,6 +6,9 @@
  */
 
 module.exports = {
-	
+		balance : function(req, res){
+				accountId = req.param('id');
+				console.log("Get account " + accountId + " balance.");
+				res.view("account.ejs", {id : accountId});
+		}
 };
-
