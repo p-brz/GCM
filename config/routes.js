@@ -35,7 +35,7 @@ module.exports.routes = {
   '/': {
     view: 'homepage'
   },
-  'get /:id' : {
+  'get /conta/:id' : {
     controller: 'AccountController',
     action : 'balance'
   }

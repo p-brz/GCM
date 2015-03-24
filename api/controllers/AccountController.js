@@ -6,6 +6,9 @@
  */
 
 module.exports = {
+		// index : function(req, res){
+		// 	res.view('account.ejs', {id : 1, balance : 0});
+		// },
 		balance : function(req, res){
 				/*req.param obtem o parâmetro da query id.
 					Acredito q pode obter valor do path se estiver especificada uma rota apropriada em config/routes.js.
@@ -13,6 +16,7 @@ module.exports = {
 					Ver http://sailsjs.org/#!/documentation/reference/req/req.param.html (para req.param)
 						e http://sailsjs.org/#!/documentation/concepts/Routes/URLSlugs.html (para a sintaxe de rotas parametrizadas)
 				*/
+				sails.log("execute balance");
 				accountId = req.param('id');
 				/* Comando de log do sails. Ver: http://sailsjs.org/#!/documentation/concepts/Logging/sails.log.html*/
 				sails.log("Get account " + accountId + " balance.");
