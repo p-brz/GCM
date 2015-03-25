@@ -17,8 +17,8 @@
     }
 
     console.log("id is: " + accountId);
-    document.accountform.action = "account/" + accountId;
-    if(document.pressed == 'deposit'){
+    document.accountform.action = "/account/" + accountId;
+    if(document.pressed == 'deposit'){//deposito
       document.accountform.action += "/deposit";
     }
     else if(document.pressed == 'withdraw'){ //saque
@@ -29,8 +29,9 @@
   </script>
 
   <form name="accountform" onsubmit="return OnSubmitForm();">
+
     <div class="input-group" >
-      <input name="value" type="number" step="0.01" class="form-control" placeholder="0.0">
+      <input name="value" type="number" step="1.00" class="form-control" placeholder="0.0" method="POST">
       <button type="submit" class="btn btn-default btn-success" onclick="document.pressed='deposit';">
         <i class="fa fa-plus-circle fa-lg"> </i>
       </button>
