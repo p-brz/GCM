@@ -49,8 +49,9 @@ module.exports = {
 			sails.log("execute deposit");
 			accountId = req.param('id');
 			depositValue = req.param('value');
-			typeof(depositValue) == "undefined" ? depositValue = 0.0 : depositValue = parseFloat(depositValue);
-
+			sails.log("param " +depositValue);
+			typeof(depositValue) == "undefined" || depositValue == "" ? depositValue = 0.0 : depositValue = parseFloat(depositValue);
+			//sails.log(depositValue);
 
 			/* Comando de log do sails. Ver: http://sailsjs.org/#!/documentation/concepts/Logging/sails.log.html*/
 			sails.log("Get account " + accountId + " balance.");
@@ -79,10 +80,10 @@ module.exports = {
 					Ver http://sailsjs.org/#!/documentation/reference/req/req.param.html (para req.param)
 						e http://sailsjs.org/#!/documentation/concepts/Routes/URLSlugs.html (para a sintaxe de rotas parametrizadas)
 				*/
-				sails.log("execute deposit");
+				sails.log("execute withdraw");
 				accountId = req.param('id');
 				depositValue = req.param('value');
-				typeof(depositValue) == "undefined" ? depositValue = 0.0 : depositValue = parseFloat(depositValue);
+				typeof(depositValue) == "undefined" || depositValue == "" ? depositValue = 0.0 : depositValue = parseFloat(depositValue);
 
 				/* Comando de log do sails. Ver: http://sailsjs.org/#!/documentation/concepts/Logging/sails.log.html*/
 				sails.log("Get account " + accountId + " balance.");

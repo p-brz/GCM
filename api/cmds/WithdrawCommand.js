@@ -8,11 +8,11 @@ module.exports = {
             else{
                 var getfound = found;
                 getfound.balance -= data.value;
-                
+
                 getfound.save(
                     function(err,s){
-                        sails.log("Deposit ok " + s.id + " " + s.balance);
-                    });      
+                        sails.log('Deposit ok ' + s.id + ' ' + s.balance);
+                    });     
 
                 callback({account : getfound, balance : getfound.balance});
             }
