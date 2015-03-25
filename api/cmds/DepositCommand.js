@@ -7,7 +7,8 @@ module.exports = {
             }
             else{
                 var getfound = found;
-                getfound.balance += parseFloat(data.value);
+                getfound.balance += data.value;
+
                 getfound.save(
                     function(err,s){
                         sails.log("Deposit ok " + s.id + " " + s.balance);

@@ -42,6 +42,10 @@ module.exports.routes = {
   '/account/:id/deposit?*' : {
     controller : 'AccountController',
     action : 'deposit'
+  },
+  '/account/:id/withdraw?*' : {
+    controller : 'AccountController',
+    action : 'withdraw'
   }
 
   /***************************************************************************
