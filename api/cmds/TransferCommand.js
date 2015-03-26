@@ -1,14 +1,37 @@
 module.exports = {
     execute: function (data, callback) {
 
-        Account.findOne({id : data.sid}).exec(function(err, found){
+        Account.find({id : [data.sender_id, data.receiver_id]}).exec(function(err, found){
+            var receiver = undefined;
+            var sender = undefined;
+            while (found.length){
+                var element = found.pop();
+
+                if(element.id == data.sender_id){
+                    sender = element;
+                }else{
+                    receiver = element;
+                }
+            }
+
             
-            if(err){
-                callback({error : err});
+            if(!receiver || !sender){
+                callback({error : 'Undefined receiver / sender'});
             }
-            else{
-                callback({account : found, balance : found.balance});
+
+            var value = data.value;
+            if(sender.balance < data.value){
+                callback({error : 'Insufficient balance for sender'});
             }
+
+            sender.balance -= value;
+            receiver.balance += value;
+
+            sender.save();
+            receiver.save();
+            
+            callback({account : found, balance : found.balance});
+
         });
     }
 };
