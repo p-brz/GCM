@@ -47,11 +47,17 @@ module.exports = {
         value = req.param('value');
         
         console.log('Value is ' + value);
-        res.ok();
         
         TransferCmd = require('../cmds/TransferCommand.js');
         TransferCmd.execute({sender_id: accountId, 'receiver_id': receiverId, 'value': value}, function(data){
-            res.view('account.ejs', {id : accountId, balance : data.balance, account : data.account});
+            
+            if(data.error){
+                res.send(400);
+                sails.log(data.error);
+                return;
+            }
+            
+            res.redirect('/conta/' + data.account);
         });
     }
     
