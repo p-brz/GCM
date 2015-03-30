@@ -109,7 +109,7 @@ module.exports = {
     transfer : function(req, res){
         sails.log('Realizando transferência');
         
-        accountId = req.param('sid');
+        accountId = req.param('id');
         receiverId = req.param('rid');
         
         value = req.param('value');
@@ -125,7 +125,7 @@ module.exports = {
                 return;
             }
             
-            res.redirect('/conta/' + data.account);
+            res.redirect('/account/' + data.account);
         });
     }
     

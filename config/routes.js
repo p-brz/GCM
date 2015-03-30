@@ -22,7 +22,7 @@
 
 module.exports.routes = {
 
-  /***************************************************************************
+    /***************************************************************************
   *                                                                          *
   * Make the view located at `views/homepage.ejs` (or `views/homepage.jade`, *
   * etc. depending on your default view engine) your home page.              *
@@ -32,23 +32,27 @@ module.exports.routes = {
   *                                                                          *
   ***************************************************************************/
 
-  '/': {
-    view: 'homepage'
-  },
-  'get /account/:id' : {
-    controller: 'AccountController',
-    action : 'balance'
-  },
-  '/account/:id/deposit?*' : {
-    controller : 'AccountController',
-    action : 'deposit'
-  },
-  '/account/:id/withdraw?*' : {
-    controller : 'AccountController',
-    action : 'withdraw'
-  }
+    '/': {
+        view: 'homepage'
+    },
+    'get /account/:id' : {
+        controller: 'AccountController',
+        action : 'balance'
+    },
+    '/account/:id/deposit?*' : {
+        controller : 'AccountController',
+        action : 'deposit'
+    },
+    '/account/:id/withdraw?*' : {
+        controller : 'AccountController',
+        action : 'withdraw'
+    },
+    '/account/:id/transfer?*' : {
+        controller: 'AccountController',
+        action: 'transfer'
+    }
 
-  /***************************************************************************
+    /***************************************************************************
   *                                                                          *
   * Custom routes here...                                                    *
   *                                                                          *
