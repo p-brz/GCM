@@ -17,6 +17,7 @@ module.exports = {
 						e http://sailsjs.org/#!/documentation/concepts/Routes/URLSlugs.html (para a sintaxe de rotas parametrizadas)
 				*/
         sails.log("execute balance");
+        sails.log('Balance of ' + req.param('balance'));
         accountId = req.param('id');
         /* Comando de log do sails. Ver: http://sailsjs.org/#!/documentation/concepts/Logging/sails.log.html*/
         sails.log("Get account " + accountId + " balance.");
@@ -112,12 +113,14 @@ module.exports = {
         accountId = req.param('id');
         receiverId = req.param('rid');
         
-        value = req.param('value');
+        transferValue = req.param('value');
+        
+        typeof(transferValue) == "undefined" || transferValue == "" ? transferValue = 0.0 : transferValue = parseFloat(transferValue);
         
         console.log('Value is ' + value);
         
         TransferCmd = require('../cmds/TransferCommand.js');
-        TransferCmd.execute({sender_id: accountId, 'receiver_id': receiverId, 'value': value}, function(data){
+        TransferCmd.execute({sender_id: accountId, 'receiver_id': receiverId, 'value': transferValue}, function(data){
             
             if(data.error){
                 res.send(400);
