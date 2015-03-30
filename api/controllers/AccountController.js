@@ -21,22 +21,90 @@ module.exports = {
         /* Comando de log do sails. Ver: http://sailsjs.org/#!/documentation/concepts/Logging/sails.log.html*/
         sails.log("Get account " + accountId + " balance.");
 
-        //Obtém BalanceCommand
-        BalanceCmd = require('../cmds/BalanceCommand.js');
-        try{
-            BalanceCmd.execute({id : accountId} , function(data){
-                //deveriamos testar erros
-                //Envia para o cliente a view 'account.ejs' com os dados presentes em data
-                res.view('account.ejs', {id : accountId, balance : data.balance, account : data.account});
-            });
-        }
-        catch(e){
-            /* Sails provê alguns métodos para facilitar notificação de erros.
+				//Obtém BalanceCommand
+				BalanceCmd = require('../cmds/BalanceCommand.js');
+				try{
+						callback = function(data){
+									//deveriamos testar erros
+									//Envia para o cliente a view 'account.ejs' com os dados presentes em data
+									res.view('account.ejs', {id : accountId, balance : data.balance, account : data.account});
+						};
+						BalanceCmd.execute({id : accountId} , callback);
+				}
+				catch(e){
+						/* Sails provê alguns métodos para facilitar notificação de erros.
 							 Ver: http://sailsjs.org/#!/documentation/concepts/Custom-Responses
 						*/
-            res.serverError(e);
-        }
+						res.serverError(e);
+				}
+	},
+
+	deposit : function(req, res){
+			/*req.param obtem o parâmetro da query id.
+				Acredito q pode obter valor do path se estiver especificada uma rota apropriada em config/routes.js.
+				Por exemplo: /account/balance/:id   # o ":" é importante
+				Ver http://sailsjs.org/#!/documentation/reference/req/req.param.html (para req.param)
+					e http://sailsjs.org/#!/documentation/concepts/Routes/URLSlugs.html (para a sintaxe de rotas parametrizadas)
+			*/
+			sails.log("execute deposit");
+			accountId = req.param('id');
+			depositValue = req.param('value');
+			sails.log("param " +depositValue);
+			typeof(depositValue) == "undefined" || depositValue == "" ? depositValue = 0.0 : depositValue = parseFloat(depositValue);
+			//sails.log(depositValue);
+
+			/* Comando de log do sails. Ver: http://sailsjs.org/#!/documentation/concepts/Logging/sails.log.html*/
+			sails.log("Get account " + accountId + " balance.");
+
+			//Obtém BalanceCommand
+			DepositCmd = require('../cmds/DepositCommand.js');
+			try{
+					callback = function(data){
+								//deveriamos testar erros
+								//Envia para o cliente a view 'account.ejs' com os dados presentes em data
+								res.view('account.ejs', {id : accountId, balance : data.balance});
+					};
+					DepositCmd.execute({id : accountId, value : depositValue} , callback);
+			}
+			catch(e){
+					
+        		res.serverError(e);
+    		}
     },
+
+
+   withdraw : function(req, res){
+				/*req.param obtem o parâmetro da query id.
+					Acredito q pode obter valor do path se estiver especificada uma rota apropriada em config/routes.js.
+					Por exemplo: /account/balance/:id   # o ":" é importante
+					Ver http://sailsjs.org/#!/documentation/reference/req/req.param.html (para req.param)
+						e http://sailsjs.org/#!/documentation/concepts/Routes/URLSlugs.html (para a sintaxe de rotas parametrizadas)
+				*/
+				sails.log("execute withdraw");
+				accountId = req.param('id');
+				depositValue = req.param('value');
+				typeof(depositValue) == "undefined" || depositValue == "" ? depositValue = 0.0 : depositValue = parseFloat(depositValue);
+
+				/* Comando de log do sails. Ver: http://sailsjs.org/#!/documentation/concepts/Logging/sails.log.html*/
+				sails.log("Get account " + accountId + " balance.");
+
+				//Obtém BalanceCommand
+				WithdrawCmd = require('../cmds/WithdrawCommand.js');
+				try{
+						callback = function(data){
+									//deveriamos testar erros
+									//Envia para o cliente a view 'account.ejs' com os dados presentes em data
+									res.view('account.ejs', {id : accountId, balance : data.balance});
+						};
+						WithdrawCmd.execute({id : accountId, value : depositValue} , callback);
+				}
+				catch(e){
+						
+            		res.serverError(e);
+    			}
+    },
+
+
 
     transfer : function(req, res){
         sails.log('Realizando transferência');
