@@ -96,7 +96,8 @@ module.exports = {
 						callback = function(data){
 									//deveriamos testar erros
 									//Envia para o cliente a view 'account.ejs' com os dados presentes em data
-									res.view('account.ejs', {id : accountId, balance : data.balance});
+									withdrawMsg = "Débito no valor " + depositValue + " para a conta " + accountId + " realizado com sucesso"
+									res.view('account.ejs', {id : accountId, balance : data.balance, message : withdrawMsg});
 						};
 						WithdrawCmd.execute({id : accountId, value : depositValue} , callback);
 				}
