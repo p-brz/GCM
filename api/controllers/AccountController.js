@@ -63,12 +63,13 @@ module.exports = {
 					callback = function(data){
 								//deveriamos testar erros
 								//Envia para o cliente a view 'account.ejs' com os dados presentes em data
-								res.view('account.ejs', {id : accountId, balance : data.balance});
+                depositMsg = "Crédito no valor " + depositValue + " para a conta " + accountId + " realizado com sucesso"
+								res.view('account.ejs', {id : accountId, balance : data.balance, message : depositMsg});
 					};
 					DepositCmd.execute({id : accountId, value : depositValue} , callback);
 			}
 			catch(e){
-					
+
         		res.serverError(e);
     		}
     },
@@ -100,7 +101,7 @@ module.exports = {
 						WithdrawCmd.execute({id : accountId, value : depositValue} , callback);
 				}
 				catch(e){
-						
+
             		res.serverError(e);
     			}
     },
@@ -109,27 +110,27 @@ module.exports = {
 
     transfer : function(req, res){
         sails.log('Realizando transferência');
-        
+
         accountId = req.param('id');
         receiverId = req.param('rid');
-        
+
         transferValue = req.param('value');
-        
+
         typeof(transferValue) == "undefined" || transferValue == "" ? transferValue = 0.0 : transferValue = parseFloat(transferValue);
-        
+
         console.log('Value is ' + value);
-        
+
         TransferCmd = require('../cmds/TransferCommand.js');
         TransferCmd.execute({sender_id: accountId, 'receiver_id': receiverId, 'value': transferValue}, function(data){
-            
+
             if(data.error){
                 res.send(400);
                 sails.log(data.error);
                 return;
             }
-            
+
             res.redirect('/account/' + data.account);
         });
     }
-    
+
 };

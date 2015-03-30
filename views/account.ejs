@@ -9,15 +9,15 @@
     </p>
 
     <script type="text/javascript">
-        
+
         $(document).ready(function(){
-            var myMessage = <%= typeof(message) != "undefined" ? message : '' %>;
+            var myMessage = "<%= typeof(message) != 'undefined' ? message : '' %>";
             if(myMessage !== ''){
                 alert(myMessage);
             }
         });
-        
-        
+
+
         function submitForm(action){
             var accId = <%= id %>;
             var actionMap = {
