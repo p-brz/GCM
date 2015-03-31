@@ -11,10 +11,12 @@ module.exports = {
 
                 getfound.save(
                     function(err,s){
-                        sails.log('Deposit ok ' + s.id + ' ' + s.balance);
-                    });     
-
-                callback({account : getfound, balance : getfound.balance});
+                        if(err){
+                            callback({error : err});
+                            return;
+                        }
+                        callback({account : s, balance : s.balance});
+                    });
             }
         });
     }
