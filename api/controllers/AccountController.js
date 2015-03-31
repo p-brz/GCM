@@ -63,7 +63,11 @@ module.exports = {
             callback = function(data){
                 //deveriamos testar erros
                 //Envia para o cliente a view 'account.ejs' com os dados presentes em data
-                depositMsg = "Crédito no valor " + depositValue + " para a conta " + accountId + " realizado com sucesso"
+                depositMsg =
+                    "Crédito no valor " + depositValue
+                    + " para a conta " + accountId + " realizado com sucesso."
+                    + " Bônus de " + data.bonus + " pontos creditado.";
+
                 res.view('account.ejs', {id : accountId, balance : data.balance, message : depositMsg});
             };
             DepositCmd.execute({id : accountId, value : depositValue} , callback);
