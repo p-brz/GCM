@@ -1,7 +1,8 @@
 module.exports = {
     
     log: function(data){
-        sails.log(data);
+        var date = new Date();
+        sails.log('\n' + data + '\n\tMessage at ' + date + '\n-----------------------------------\n');
     }
     
 }
