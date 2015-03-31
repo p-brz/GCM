@@ -8,25 +8,25 @@ module.exports = {
             else{
                 var getfound = found;
                 getfound.balance += data.value;
-                
-                var bonus = parseInt(data.value) / 10;
-                sails.log(bonus);
-                getfound.bonus += parseInt(bonus);
-                
+
+                var creditedBonus = parseInt(parseInt(data.value) / 10);
+                sails.log(creditedBonus);
+                getfound.bonus += creditedBonus;
+
                 getfound.save(
                     function(err,s){
-                        
+
                         if(err){
                             sails.log(err);
                             callback({error : err});
                             return;
                         }
-                        
+
                         sails.log("Deposit ok " + s.id + " " + s.balance);
                         sails.log('Total bonus: ' + s.bonus);
-                        
-                        callback({account : s, balance : s.balance, bonus: s.bonus});
-                    });      
+
+                        callback({account : s, balance : s.balance, bonus: s.bonus, creditedBonus : creditedBonus});
+                    });
             }
         });
     }

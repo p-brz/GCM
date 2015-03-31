@@ -16,7 +16,7 @@ module.exports = {
     // },
     balance : function(req, res){
 
-        
+
         sails.log("Session message: " + req.session.message);
         var flash_message = undefined;
         if(req.session.message){
@@ -78,11 +78,14 @@ module.exports = {
             callback = function(data){
                 //deveriamos testar erros
                 //Envia para o cliente a view 'account.ejs' com os dados presentes em data
-                depositMsg = "Crédito no valor " + depositValue + " para a conta " + accountId + " realizado com sucesso. "
-                depositMsg += "Saldo de Bônus: " + data.bonus + ". Continue usando nossos serviços e acumule bônus."
+                depositMsg =
+                    "Crédito no valor " + depositValue
+                    + " para a conta " + accountId + " realizado com sucesso."
+                    + " Bônus de " + data.creditedBonus + " pontos creditado."
+                    + " Saldo de Bônus: " + data.bonus
+                    + ". Continue usando nossos serviços e acumule bônus.";
 
                 redirectWithMessage(req, res, depositMsg, accountId);
-                //                res.view('account.ejs', {id : accountId, balance : data.balance, message : depositMsg});
             };
             DepositCmd.execute({id : accountId, value : depositValue} , callback);
         }
