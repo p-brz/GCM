@@ -119,19 +119,25 @@ module.exports = {
 
         typeof(transferValue) == "undefined" || transferValue == "" ? transferValue = 0.0 : transferValue = parseFloat(transferValue);
 
-        console.log('Value is ' + value);
+        console.log('Value is ' + transferValue);
+
 
         TransferCmd = require('../cmds/TransferCommand.js');
-        TransferCmd.execute({sender_id: accountId, 'receiver_id': receiverId, 'value': transferValue}, function(data){
 
-            if(data.error){
-                res.send(400);
-                sails.log(data.error);
-                return;
-            }
 
-            res.redirect('/account/' + data.account);
-        });
+        try{
+						callback = function(data){
+									//deveriamos testar erros
+									//Envia para o cliente a view 'account.ejs' com os dados presentes em data
+									transferMsg = "Transferência no valor " + transferValue + " para a conta " + receiverId + " realizado com sucesso"
+									res.view('account.ejs', {id : accountId, balance : data.balance, message : transferMsg});
+						};
+						TransferCmd.execute({sender_id: accountId, 'receiver_id': receiverId, 'value': transferValue} , callback);
+				}
+				catch(e){
+
+            		res.serverError(e);
+    			}
     }
 
 };
