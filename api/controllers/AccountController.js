@@ -79,6 +79,7 @@ module.exports = {
                 //deveriamos testar erros
                 //Envia para o cliente a view 'account.ejs' com os dados presentes em data
                 depositMsg = "Crédito no valor " + depositValue + " para a conta " + accountId + " realizado com sucesso. "
+                depositMsg += "Saldo de Bônus: " + data.bonus + ". Continue usando nossos serviços e acumule bônus."
 
                 redirectWithMessage(req, res, depositMsg, accountId);
                 //                res.view('account.ejs', {id : accountId, balance : data.balance, message : depositMsg});
