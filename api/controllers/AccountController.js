@@ -5,11 +5,26 @@
  * @help        :: See http://links.sailsjs.org/docs/controllers
  */
 
+function redirectWithMessage(req, res, message, accountId){
+    req.session.message = message;
+    res.redirect('/account/' + accountId);
+}
+
 module.exports = {
     // index : function(req, res){
     // 	res.view('account.ejs', {id : 1, balance : 0});
     // },
     balance : function(req, res){
+
+        
+        sails.log("Session message: " + req.session.message);
+        var flash_message = undefined;
+        if(req.session.message){
+            sails.log('We have a message!');
+            flash_message = req.session.message;
+            req.session.message = undefined;
+        }
+
         /*req.param obtem o parâmetro da query id.
 					Acredito q pode obter valor do path se estiver especificada uma rota apropriada em config/routes.js.
 					Por exemplo: /account/balance/:id   # o ":" é importante
@@ -28,7 +43,7 @@ module.exports = {
             callback = function(data){
                 //deveriamos testar erros
                 //Envia para o cliente a view 'account.ejs' com os dados presentes em data
-                res.view('account.ejs', {id : accountId, balance : data.balance, account : data.account});
+                res.view('account.ejs', {id : accountId, balance : data.balance, account : data.account, message: flash_message, bonus: data.bonus});
             };
             BalanceCmd.execute({id : accountId} , callback);
         }
@@ -63,8 +78,10 @@ module.exports = {
             callback = function(data){
                 //deveriamos testar erros
                 //Envia para o cliente a view 'account.ejs' com os dados presentes em data
-                depositMsg = "Crédito no valor " + depositValue + " para a conta " + accountId + " realizado com sucesso"
-                res.view('account.ejs', {id : accountId, balance : data.balance, message : depositMsg});
+                depositMsg = "Crédito no valor " + depositValue + " para a conta " + accountId + " realizado com sucesso. "
+
+                redirectWithMessage(req, res, depositMsg, accountId);
+                //                res.view('account.ejs', {id : accountId, balance : data.balance, message : depositMsg});
             };
             DepositCmd.execute({id : accountId, value : depositValue} , callback);
         }
@@ -97,7 +114,8 @@ module.exports = {
                 //deveriamos testar erros
                 //Envia para o cliente a view 'account.ejs' com os dados presentes em data
                 withdrawMsg = "Débito no valor " + depositValue + " para a conta " + accountId + " realizado com sucesso"
-                res.view('account.ejs', {id : accountId, balance : data.balance, message : withdrawMsg});
+                redirectWithMessage(req, res, withdrawMsg, accountId);
+                //                res.view('account.ejs', {id : accountId, balance : data.balance, message : withdrawMsg});
             };
             WithdrawCmd.execute({id : accountId, value : depositValue} , callback);
         }
@@ -126,18 +144,19 @@ module.exports = {
 
 
         try{
-						callback = function(data){
-									//deveriamos testar erros
-									//Envia para o cliente a view 'account.ejs' com os dados presentes em data
-									transferMsg = "Transferência no valor " + transferValue + " para a conta " + receiverId + " realizado com sucesso"
-									res.view('account.ejs', {id : accountId, balance : data.balance, message : transferMsg});
-						};
-						TransferCmd.execute({sender_id: accountId, 'receiver_id': receiverId, 'value': transferValue} , callback);
-				}
-				catch(e){
+            callback = function(data){
+                //deveriamos testar erros
+                //Envia para o cliente a view 'account.ejs' com os dados presentes em data
+                transferMsg = "Transferência no valor " + transferValue + " para a conta " + receiverId + " realizado com sucesso"
+                redirectWithMessage(req, res, transferMsg, accountId);
+//                res.view('account.ejs', {id : accountId, balance : data.balance, message : transferMsg});
+            };
+            TransferCmd.execute({sender_id: accountId, 'receiver_id': receiverId, 'value': transferValue} , callback);
+        }
+        catch(e){
 
-            		res.serverError(e);
-    			}
+            res.serverError(e);
+        }
     }
 
 };

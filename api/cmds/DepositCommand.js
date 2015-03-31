@@ -23,10 +23,10 @@ module.exports = {
                         }
                         
                         sails.log("Deposit ok " + s.id + " " + s.balance);
-                        sails.log('Total bonus: ' + bonus);
+                        sails.log('Total bonus: ' + s.bonus);
+                        
+                        callback({account : s, balance : s.balance});
                     });      
-
-                callback({account : getfound, balance : getfound.balance});
             }
         });
     }

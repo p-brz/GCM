@@ -7,7 +7,7 @@ module.exports = {
                 callback({error : err});
             }
             else{
-                callback({account : found, balance : found.balance});
+                callback({account : found, balance : found.balance, bonus: found.bonus});
             }
         });
     }

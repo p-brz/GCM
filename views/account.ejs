@@ -8,13 +8,22 @@
         R$ <%= typeof(balance) != "undefined" ? balance : 0.0 %>
     </p>
 
+
+    <h2> Bonus: </h2>
+    <p class="well well-lg lead">
+        <%= typeof(bonus) != "undefined" ? bonus : 0 %> Pontos
+    </p>
+
     <script type="text/javascript">
 
         $(document).ready(function(){
             var myMessage = "<%= typeof(message) != 'undefined' ? message : '' %>";
-            if(myMessage !== ''){
+            console.log(myMessage);
+            if(myMessage){
+                console.log("Dentro do IF! " + myMessage);
                 alert(myMessage);
             }
+
         });
 
 
