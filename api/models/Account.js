@@ -17,7 +17,7 @@ module.exports = {
         defaultsTo: 0.0
       },
       bonus : {
-        type : 'int',
+        type : 'integer',
         defaultsTo: 0
       }
   }
