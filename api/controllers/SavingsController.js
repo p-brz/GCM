@@ -51,7 +51,7 @@ module.exports = {
             callback = function(data){
 				depositMsg =
 					"Crédito no valor " + depositValue
-					+ " para a conta " + data.savingsId + " realizado com sucesso.";
+					+ " para a poupança " + data.savingsId + " realizado com sucesso.";
                 redirectWithMessage(req, res, depositMsg, data.savingsId);
             };
             DepositCmd.execute({id : savingsId, value : depositValue} , callback);
