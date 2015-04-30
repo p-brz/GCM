@@ -9,7 +9,7 @@ module.exports = {
                 var getfound = found;
                 getfound.balance += data.value;
 
-                var creditedBonus = parseInt(parseInt(data.value) * 0.05);
+                var creditedBonus = parseInt(parseInt(data.value) * 0.03);
                 sails.log(creditedBonus);
                 getfound.bonus += creditedBonus;
 
