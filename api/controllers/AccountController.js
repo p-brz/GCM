@@ -85,6 +85,11 @@ module.exports = {
         WithdrawCmd = require('../cmds/WithdrawCommand.js');
         try{
             callback = function(data){
+                if(typeof(data.error) != 'undefined'){
+                    redirectWithMessage(req, res, data.error, accountId);
+                    return;
+                }
+                    
                 withdrawMsg = "Débito no valor " + depositValue + " para a conta " + accountId + " realizado com sucesso"
                 redirectWithMessage(req, res, withdrawMsg, accountId);
             };

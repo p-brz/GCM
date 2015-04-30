@@ -7,6 +7,16 @@ module.exports = {
             }
             else{
                 var getfound = found;
+                if(getfound.balance < data.value){
+                    callback({error: 'Saldo em conta insuficiente para realizar esta operação'});
+                    return;
+                }
+                
+                if(getfound.balance < 2){
+                    callback({error: 'Saldo em conta deve ser superior a $2 para realizar esta operação'});
+                    return;
+                }
+                
                 getfound.balance -= data.value;
 
                 getfound.save(
