@@ -7,18 +7,21 @@
 
 module.exports = {
 
-  attributes: {
-      username: {
-        type: 'STRING',
-        defaultsTo: ''
-      },
-      balance : {
-        type: 'float',
-        defaultsTo: 0.0
-      },
-      bonus : {
-        type : 'integer',
-        defaultsTo: 0
-      }
-  }
+    attributes: {
+        username: {
+            type: 'STRING',
+            defaultsTo: ''
+        },
+        balance : {
+            type: 'float',
+            defaultsTo: 0.0
+        },
+        bonus : {
+            type : 'integer',
+            defaultsTo: 0
+        },
+        savings : {
+            model : 'Savings'
+        }
+    }
 };
