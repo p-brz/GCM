@@ -8,20 +8,15 @@ module.exports = {
             else{
                 var getfound = found;
                 getfound.balance += data.value;
-
-
-                
-
                 getfound.save(
                     function(err,s){
-
                         if(err){
                             callback({error : err});
                             return;
                         }
-
-                        callback({savingsId : getfound.id);
-                    });
+                        callback({savingsId : getfound.id});
+                    }
+                );
             }
         });
     }
