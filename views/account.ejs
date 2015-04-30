@@ -19,7 +19,9 @@
             <!--<input type="hidden" name="sid" value="<%= id%>">-->
             <input name="value" name="value" type="number" step="0.01" class="form-control" placeholder="0.0">
             <br>
-            <button type="submit" class="btn btn-default btn-success" onclick="submitForm('deposit')">
+            <button id="creditButton" type="submit" class="btn btn-default btn-success"
+                    data-toggle="tooltip" data-placement="top" title="Clique para depositar o valor informado."
+                    onclick="submitForm('deposit')">
                 <i class="fa fa-plus-circle fa-lg"> </i>
             </button>
             <button id="debitButton" type="submit" class="btn btn-default btn-danger"
@@ -68,7 +70,7 @@
         function enableTooltips(){
             $('[data-toggle="tooltip"]').tooltip();
         }
-        
+
         $(document).ready(function(){
             showMessage();
             enableTooltips();
