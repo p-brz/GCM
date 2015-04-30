@@ -13,18 +13,26 @@ function redirectWithMessage(req, res, message, savingsId){
 
 module.exports = {
 
-    
-
-	balance : function(req, res){
-		savingsId = req.param('id');
-		Savings.findOne({id : savingsId}).exec(function(err, found){
-            if(err){
-				res.serverError(err);
-            }
-            else{
-				res.view('savings.ejs', found);
-            }
-        });
+    balance : function(req, res){
+        var flash_message = undefined;
+        if(req.session.message){
+            flash_message = req.session.message;
+            req.session.message = undefined;
+        }
+        savingsId = req.param('id');
+        SavingsBalanceCmd = require('../cmds/SavingsBalanceCommand.js');
+        try{
+            callback = function(data){
+                res.view('savings.ejs', data);
+            };
+            SavingsBalanceCmd.execute({id : savingsId} , callback);
+        }
+        catch(e){
+            /* Sails provê alguns métodos para facilitar notificação de erros.
+                             Ver: http://sailsjs.org/#!/documentation/concepts/Custom-Responses
+                        */
+            res.serverError(e);
+        }
     },
     deposit : function(req, res){
         savingsId = req.param('id');
