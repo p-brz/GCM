@@ -23,7 +23,12 @@ module.exports = {
         SavingsBalanceCmd = require('../cmds/SavingsBalanceCommand.js');
         try{
             callback = function(data){
-                res.view('savings.ejs', data);
+				content = {
+					id : data.id,
+					balance : data.balance,
+					message : flash_message
+				};
+                res.view('savings.ejs', content);
             };
             SavingsBalanceCmd.execute({id : savingsId} , callback);
         }
@@ -37,15 +42,17 @@ module.exports = {
     deposit : function(req, res){
         savingsId = req.param('id');
         depositValue = req.param('value');
-        
+
         typeof(depositValue) == "undefined" || depositValue == "" ? depositValue = 0.0 : depositValue = parseFloat(depositValue);
-        
-        
+
+
         DepositCmd = require('../cmds/SavingsDepositCommand.js');
         try{
             callback = function(data){
-
-                redirectWithMessage(req, res, undefined, data.savingsId);
+				depositMsg =
+					"Crédito no valor " + depositValue
+					+ " para a conta " + data.savingsId + " realizado com sucesso.";
+                redirectWithMessage(req, res, depositMsg, data.savingsId);
             };
             DepositCmd.execute({id : savingsId, value : depositValue} , callback);
         }
