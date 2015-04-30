@@ -54,6 +54,10 @@ module.exports.routes = {
     'get /savings/:id' : {
         controller: 'SavingsController',
         action : 'balance'
+    },
+      '/savings/:id/deposit?*' : {
+        controller : 'SavingsController',
+        action : 'deposit'
     }
 
     /***************************************************************************
