@@ -1,23 +1,15 @@
 <div class="container">
+    <h1> Poupança <%= id %></h1>
 
-    <h1> Account <%= id %></h1>
-
-    <a class="btn btn-default" href="/savings/<%= id %>"> Ir para poupança </a>
+    <a class="btn btn-default" href="/account/<%= id %>"> Ir para conta corrente </a>
 
     <h2> Saldo: </h2>
     <p class="well well-lg lead">
         R$ <%= typeof(balance) != "undefined" ? balance : 0.0 %>
     </p>
 
-
-    <h2> Bonus: </h2>
-    <p class="well well-lg lead">
-        <%= typeof(bonus) != "undefined" ? bonus : 0 %> Pontos
-    </p>
-
     <form id="my-form" name="accountform" action="#">
         <div class="input-group" >
-            <!--<input type="hidden" name="sid" value="<%= id%>">-->
             <input name="value" name="value" type="number" step="0.01" class="form-control" placeholder="0.0">
             <br>
             <button id="creditButton" type="submit" class="btn btn-default btn-success"
@@ -25,37 +17,21 @@
                     onclick="submitForm('deposit')">
                 <i class="fa fa-plus-circle fa-lg"> </i>
             </button>
-            <button id="debitButton" type="submit" class="btn btn-default btn-danger"
-                    data-toggle="tooltip" data-placement="top" title="Clique para sacar o valor informado."
-                    onclick="submitForm('withdraw');">
-                <i class="fa fa-minus-circle fa-lg"> </i>
-            </button>
-        </div>
-
-        <div class="input-group" >
-            <input name="rid" type="text" class="form-control" placeholder="Número da conta de destino">
-            <button type="submit" class="btn btn-default btn-warning" onclick="submitForm('transfer')">
-                Transferência
-            </button>
         </div>
 
     </form>
-
-
 
     <script type="text/javascript">
 
         function submitForm(action){
             var accId = <%= id %>;
             var actionMap = {
-                'deposit': '/deposit',
-                'withdraw': '/withdraw',
-                'transfer': '/transfer'
+                'deposit': '/deposit'
             }
 
             var action = actionMap[action];
 
-            $('#my-form').attr('action', '/account/' + accId + action);
+            $('#my-form').attr('action', '/savings/' + accId + action);
             $('#my-form').submit();
         }
 
