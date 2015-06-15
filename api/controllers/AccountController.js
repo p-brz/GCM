@@ -32,7 +32,21 @@ module.exports = {
         BalanceCmd = require('../cmds/BalanceCommand.js');
         try{
             callback = function(data){
-                res.view('account.ejs', {id : accountId, balance : data.balance, account : data.account, message: flash_message, bonus: data.bonus});
+                if(!data.error){
+                      res.view('account.ejs', {
+                          id : accountId,
+                          balance : data.balance,
+                          account : data.account,
+                          message: flash_message,
+                          bonus: data.bonus
+                      });
+                }
+                else if(data.error.error_code === 404){
+                    res.notFound();
+                }
+                else{
+                    res.serverError(data.error);
+                }
             };
             BalanceCmd.execute({id : accountId} , callback);
         }
@@ -50,7 +64,7 @@ module.exports = {
         depositValue = req.param('value');
         Logger.log("Deposit value: " +depositValue);
         typeof(depositValue) == "undefined" || depositValue == "" ? depositValue = 0.0 : depositValue = parseFloat(depositValue);
-        
+
         Logger.log("Get account " + accountId + " balance.");
 
         DepositCmd = require('../cmds/DepositCommand.js');
@@ -89,7 +103,7 @@ module.exports = {
                     redirectWithMessage(req, res, data.error, accountId);
                     return;
                 }
-                    
+
                 withdrawMsg = "Débito no valor " + depositValue + " para a conta " + accountId + " realizado com sucesso"
                 redirectWithMessage(req, res, withdrawMsg, accountId);
             };
