@@ -2,8 +2,7 @@
  * Created by alisonbnt on 18/06/15.
  */
 
-var Sails = require('sails'),
-    sails;
+var Sails = require('sails'),sails;
 
 before(function(done) {
     Sails.lift({
@@ -18,5 +17,5 @@ before(function(done) {
 
 after(function(done) {
     // here you can clear fixtures, etc.
-    sails.lower(done);
+    Sails.lower(done);
 });
