@@ -17,5 +17,3 @@ Em seguida, para inicializar o sistema, execute:
 Caso queira executar os testes, execute:
 
     npm test
-
-
