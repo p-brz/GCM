@@ -8,7 +8,7 @@ module.exports = {
             }
             else{
                 var getfound = found;
-                getfound.balance += data.value;
+                getfound.balance -= data.value;
 
                 var creditedBonus = parseInt(parseInt(data.value) * 0.03);
                 sails.log(creditedBonus);
